@@ -1,0 +1,50 @@
+\chapter{一种建模的贝叶斯方法}
+
+\section{方法简介}
+本研究使用GBIS作为建模软件，
+此软件的建模方法为Marco Bagnardi等人提出的一种建模的贝叶斯方法。
+
+一般的反演算法通过求解误差函数的最小值来得到最优的模型参数。
+这样的方法只能给出最终的结果，无法全面或正确地得到反演参数不确定度，
+所以对反演结果的可靠程度所知甚少，有得到错误的反演结果的风险。
+实际上，由于反演的不唯一性，很多时候不同的参数可能对观测的结果都能做出合理的解释。
+这就需要事先对反演参数可能的区间有一定的了解。
+
+这种贝叶斯方法的特色在于能够估计并利用数据的不确定度，
+通过多种统计学方法(如点估计，区间估计等），
+得到所要反演参数的联合与条件后验概率分布。
+最优解通过概率分布函数的最大值给出。
+
+\section{方法原理}
+
+贝叶斯方法视参数$\mathbf{m}$为随机变量，数据$\mathbf{d}$为随机变量的取样。
+二者的关系为
+\begin{equation}
+    \mathbf{d}=\mathbf{G}(\mathbf{m})+\vepsilon
+\end{equation}
+其中，$\mathbf{G}$为模型函数，$\vepsilon$为人为引入的误差随机变量。
+由贝叶斯公式，有
+\begin{equation}
+    \label{eq:pm:bayes}
+    P(\mathbf{m}|\mathbf{d})=\frac{P(\mathbf{d}|\mathbf{m})P(\mathbf{m})}{P(\mathbf{d})}
+\end{equation}
+其中$P(\mathbf{m})$为先验概率，其分布由其他方法获得。
+$P(d)$为归一化因子。
+假设$\vepsilon$服从均值为$0$，方差为$\Sigma_{\mathbf{d}}$的高斯分布，则
+\begin{equation}
+    \label{eq:pm:likelihood}
+    P(\mathbf{d}|\mathbf{m})=(2\pi)^{\frac{N}{2}}|\Sigma_{\mathbf{d}}|^{-\frac{1}{2}}
+    \exp\left(-\frac{1}{2}(\mathbf{d-Gm})^{\top}\Sigma_{\mathbf{d}}^{-1}(\mathbf{d-Gm})\right)
+\end{equation}
+其中$\Sigma_{\mathbf{d}}$由形变数据估计得。
+这种方法旨在求得最优的模型参数$\mathbf{m}$的后验概率分布$p(\mathbf{m}|\mathbf{d})$。
+下面简述算法。
+\begin{enumerate}
+    \item 为了节省时间，对数据$\mathbf{d}$进行采样，并估计数据的方差$\Sigma_{\mathbf{d}}$。
+    \item 给定参数$\mathbf{m}$的可能区间和先验概率和循环的起始点$\mathbf{m_0}$。
+    \item 由起始点$\mathbf{m_0}$计算理论形变$\mathbf{d}_0$。
+    \item 由公式\ref{eq:pm:bayes}和公式\ref{eq:pm:likelihood}算得当前后验概率$p(\mathbf{m}|\mathbf{d}_i)$。
+    \item 模型参数按照一定的方法随机取下一步的值，重复上一步操作，得到新的后验概率$p(\mathbf{m}|\mathbf{d}_{i+1})$。
+    \item 若$p(\mathbf{m}|\mathbf{d}_{i+1})>p(\mathbf{m}|\mathbf{d}_i)$，则保留新的参数，否则放弃这一步。
+          然后循环上述内容直到循环终止。
+\end{enumerate}
