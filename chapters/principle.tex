@@ -60,7 +60,7 @@ SAR由传统的雷达技术发展而来。
 2001年，Ferretti等人首次提出PS-InSAR技术。
 即在一组时间序列SAR影像中选取相干性和稳定性均较好的永久散射体。
 通过这些PS点的相位信息获得地表形变信息。
-2004年，Andy hopper提出了新的PS算法，并将其实现在StamPS软件中。
+2004年，Andy hopper提出了新的PS算法，并将其实现在StamPS软件中\cite{hooperRecentAdvancesSAR2012}。
 本研究使用这一软件获得形变信息。
 
 PS-InSAR技术的主要内容为PS点的选取，分为两个步骤：
@@ -135,4 +135,4 @@ StamPS是基于Matlab的一套软件，软件处理数据一共分为8步：
 \section{本研究所用的方法}
 D-InSAR在监测地面沉降方面取得了一定的成果，但由于这种方法受失相干的影响比较严重，
 并不适合本研究使用。
-且由于数据较少的缘故，本研究采用数据利用率更高的SBAS-InSAR方法处理数据。
+且由于数据较少的缘故，本研究采用StamPS中数据利用率更高的SBAS-InSAR\cite{hooperMultitemporalInSARMethod2008}方法处理数据。
