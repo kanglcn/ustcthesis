@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- 同步本科生 2020 年版规定
+
+### Fixed
+
+- 修正附录章节的编号
+
+
 ## [v3.2.1] - 2020-04-03
 
 ### Added
