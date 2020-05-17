@@ -3,7 +3,6 @@
 \section{SAR与InSAR原理}
 
 \subsection{SAR}
-
 SAR由传统的雷达技术发展而来。
 通过水平向和垂直向的压缩成像技术能够实现以较小的雷达天线
 得到较高空间分辨率的影像。
@@ -14,7 +13,6 @@ SAR由传统的雷达技术发展而来。
 \end{equation}
 
 \subsection{InSAR}
-
 如果对于同一块区域有两幅影像，就可以对两幅影像做干涉处理。
 原理如图\ref{fig:geometry}所示。
 \begin{figure}[htb!]
@@ -27,7 +25,7 @@ SAR由传统的雷达技术发展而来。
 \begin{equation}
     \Delta \phi=-\frac{4\pi}{\lambda}(r_1-r_2)
 \end{equation}
-其中$\Delta r$为卫星视线方向的变化。
+其中$r_1-r_2$为卫星视线方向的距离变化。
 注意这里讨论的只是忽略大气效应即其他失相干效应，只考虑理想情况。
 通常情况下，两幅影像并不是在相同的位置拍摄，二者之间有一定的距离。
 所以当不存在任何的地表形变的情况下，可以通过一些几何的参数将此变化表达出来。
@@ -50,8 +48,8 @@ SAR由传统的雷达技术发展而来。
 
 诸多实例(火山喷发变形，地震震前和震后变形，地面沉降)
 均证明InSAR是一种有效的测量地表形变的技术。
-\section{PS-InSAR简介}
 
+\section{PS-InSAR简介}
 两幅SAR影像间隔时间可能很长，如果地表有植被，或者一年中有部分时间被冰雪覆盖，
 地表散射体在这段时间内有较大的变化，有可能导致干涉图的失相干。
 如果能挑出地表散射体中较稳定的部分，如建筑物，道路桥梁，岩石等
@@ -85,6 +83,22 @@ PS-InSAR的输入数据为连续的$M$幅SAR影像以及数字高程模型(DEM)�
 以及PS点的选取等操作得到$M-1$幅干涉图，
 之后通过相位解缠得到形变图以及平均形变速率图。
 
+PS点的差分干涉相位中主要的误差来源于高程误差，大气影响等因素，每个PS点的相位组成可以表达成：
+\begin{equation}
+    \varphi_{diff}=\varphi_{topo}+\varphi_{def}+\varphi_{orb}+\varphi_{atm}+\varphi_{noise}
+\end{equation}
+其中
+\begin{itemize}
+    \item $\varphi_{topo}$为由于所采用的数字高程模型DEM不够准确而造成的误差，可以证明
+    \begin{equation}
+        \varphi_{topo}=-\frac{4\pi B_{\bot}}{\lambda R sin \theta}\epsilon
+    \end{equation}
+    \item $\varphi_{def}$为地表形变导致的差分干涉相位的变化，一般来说是研究所需要的结果，其余的各项均为误差；
+    \item $\varphi_{orb}$是卫星轨道定轨不精确，轨道参数不准确引入的误差；
+    \item $\varphi_{atm}$为大气的延迟效应导致的误差，由于光波在大气这种介质中的传播速度相对于真空中的光速有一定的偏差而引入这一误差；
+    \item $\varphi_{noise}$为其他的一些噪声效应引入的误差，如热噪声等。
+\end{itemize}
+
 \section{SBAS-InSAR简介}
 SBAS是另外一种利用多个SAR影像数据的时间序列InSAR方法。
 SBAS通过设置选取SAR影像配对的时空基线的上限，
@@ -103,6 +117,20 @@ $\Delta\phi_j$为第$j$组影像对的差分干涉相位，共计$M$个方程。
 由已知的$\phi$根据以上方程求得$\Delta\phi$，
 然后由得到的$\Delta\phi$反过来求$\phi$。
 由于共有$M$个方程，$n$个未知数，方程组有无穷多组解，使用最小二乘法求最小二范数的解。
+
+\section{StamPS软件简介}
+StamPS是基于Matlab的一套软件，软件处理数据一共分为8步：
+\begin{enumerate}
+    \item 读取数据，并保存在matlab工作区；
+    \item 估计相位噪声，这一步通过循环估计每一幅干涉图的每一个像素点的相位噪声；
+    \item 通过分析各像素点的噪声情况筛选出PS点，这一步还估计出非PS点的像素的密度；
+    \item 上一布只是粗略地选择PS点，其中还有较多的不稳定的像素点，这一步清除这些点；
+    \item 去除所选择的像素点相位中空间不相关的视角误差；
+    \item 相位解缠；
+    \item 估计空间相关的视角误差，该误差绝大多数来源于空间相关的DEM误差，
+    包括DEM本身的误差以及从地面坐标到雷达坐标投影的误差；
+    \item 去除大气效应误差。
+\end{enumerate}
 
 \section{本研究所用的方法}
 D-InSAR在监测地面沉降方面取得了一定的成果，但由于这种方法受失相干的影响比较严重，
