@@ -3,6 +3,8 @@
 \section{SAR与InSAR原理}
 
 \subsection{SAR}
+合成孔径雷达(Synthetic apeture radar，SAR)
+是一种可以产生高分辨率图像的卫星雷达系统，属于一种微波成像雷达。
 SAR由传统的雷达技术发展而来。
 通过水平向和垂直向的压缩成像技术能够实现以较小的雷达天线
 得到较高空间分辨率的影像。
@@ -11,6 +13,27 @@ SAR由传统的雷达技术发展而来。
 \begin{equation}
     \phi=-\frac{4\pi}{\lambda}r
 \end{equation}
+目前常用的SAR卫星见表\ref{tab:sarsatellite}。
+\begin{table}
+    \centering\small
+    \begin{tabular}{@{}cccc@{}}
+    \toprule
+    卫星                                 & 发射时间      & 波段 & 国家  \\ \midrule
+    TerreaSAR-X/TanDEM-X               & 2007      & X  & 德国  \\
+    RADARSAT-2                         & 2007      & C  & 加拿大 \\
+    COSMO-SkyMed 1-4                   & 2007-2010 & X  & 意大利 \\
+    RISAT-1                            & 2012      & C  & 印度  \\
+    环境一号C卫星(HJ-1C)                     & 2012      & S  & 中国  \\
+    Kompsat-5                          & 2013      & X  & 韩国  \\
+    PAZ                                & 2013      & X  & 西班牙 \\
+    Sentinel-1                         & 2013      & C  & 欧盟  \\
+    ALOS2                              & 2013      & L  & 日本  \\
+    高分三号                               & 2016      & C  & 中国  \\
+    RADARSAT Constellation Mission 1-3 & 2017/2018 & C  & 加拿大 \\ \bottomrule
+    \end{tabular}
+    \caption{常用的SAR卫星}
+    \label{tab:sarsatellite}
+\end{table}
 
 \subsection{InSAR}
 如果对于同一块区域有两幅影像，就可以对两幅影像做干涉处理。

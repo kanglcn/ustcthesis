@@ -13,6 +13,21 @@
 这种贝叶斯方法的特色在于能够估计并利用数据的不确定度，
 通过多种统计学方法(如点估计，区间估计等），
 得到所要反演参数的联合与条件后验概率分布。
+实际计算机计算时，GBIS使用马尔可夫链蒙特卡洛(Markov Chain Monte Carlo)方法
+以及梅特罗波利斯－黑斯廷斯(Metropolis–Hastings algorithm)算法
+\cite{hastingsMonteCarloSampling1970,mosegaardMonteCarloSampling1995}
+得到采样化的后验概率分布。
+
+当前版本的GBIS软件可以通过InSAR数据和GPS数据来反演形变源的参数。
+该软件自带不同几何形状的形变源的解析模型，比如
+点源\cite{mogiRelationsEruptionsVarious1958}，
+有限球源\cite{mctigueElasticStressDeformation1987}，
+扁长椭球源\cite{yangDeformationInflationDipping1988}，
+硬币形窗台状源(penny-shaped sill-like source)\cite{fialkoDeformationDuePressurized2001}，
+开口一致的下沉堤坝(dipping dike with uniform opening)\cite{okadaSurfaceDeformationDue1985}，
+均匀滑动的断层(dipping faults with uniform slip)\cite{okadaSurfaceDeformationDue1985}。
+这些解析模型均处于各项同性弹性半空间中。
+其他此软件不含有的模型也可以很容易地在这套框架下实现。
 
 \section{方法原理}
 

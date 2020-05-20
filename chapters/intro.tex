@@ -2,7 +2,7 @@
 
 \chapter{简介}
 
-\section{研究背景}
+\section{研究背景和意义}
 
 地表形变的监测是了解地球内部物理过程的重要手段。
 许多地球物理现象，如火山，地震等，都会伴随地表的形变。
@@ -16,7 +16,7 @@
 传统方法需要人工在有限的点上布设台站，需要人力长期参与，且某些条件恶劣的区域很难人工操作；
 由于人力成本的限制，在大尺度的范围上很难布设足够密的台站，而过于稀疏的台站并不能满足监测的需求。
 
-合成干涉孔径雷达(Interferometric Synthetic Aperture Radar,InSAR)监测
+合成干涉孔径雷达(Interferometric Synthetic Aperture Radar，InSAR)监测
 具有成本低，覆盖范围广，全天候，非接触等优良特点。
 而且相较于GPS，InSAR在垂直方向的能提供更高的精度，%\cite{knuth84}
 目前已在地表沉降监测方面广泛应用，且取得了突出的成果
@@ -28,73 +28,58 @@
 进一步地表明InSAR技术在此类问题确实是一种有效的办法，
 并且成本较低，值得我国大力推广。
 
-\section{研究区域}
+\section{国内外研究现状}
+由于InSAR技术在地表形变检测领域的独特优势，
+在它从诞生开始受到微波遥感领域的强烈关注。
+近些年来，InSAR发展出来一系列的算法，如PS，SBAS，SqueeSAR等，
+能够对克服原始InSAR技术的种种劣势，
+在地表形变检测领域有广泛的应用。
 
-\subsection{研究区域简介}
-2008年7月16日，美国新墨西哥州阿蒂西亚(Artesia, New Mexico)东南部的一个卤水井(JWS Sinkhole)发生坍塌事件。
-2008年11月3日，该区域离上述卤水井较近的另一卤水井(Loco Hills Sinkhole)同样发生了垮塌。
-两次时间和空间均相近的坍塌引起了广泛的关注。
-并且，离阿蒂西亚较近的卡尔斯巴德(Carlsbad)有一卤水井，并且当地的地质背景和以上两个坍塌的卤水井类似。
-三个卤水井的位置如图\ref{fig:carlsbad}所示。
-和以上二者不同的是，此卤水井位于市区，和两条重要的高速公路相邻，如果发生坍塌，会造成更严重的伤害和经济损失。
-为了避免此种情况发生，从2009年八月份开始，当地相关部门就陆续使用地震学，地电学等的方法对此地展开地质勘探。
-从2012年开始，当地政府部门展开修复工作。
+在1978年NASA SEASET卫星发射以后，星载SAR开始登上历史舞台并应用与地球表面研究。
+关于星载干涉SAR的原理研究最早可以追溯到20世纪70年代\cite{ziskNewEarthbasedRadar1972}，
+InSAR的首次应用发生在上十几80年代末
+\cite{zebkerTopographicMappingInterferometric1986,goldsteinInterferometricRadarMeasurement1987}。
+1989年，Gabriel首次使用D-InSAR技术验证了InSAR技术可以在大尺度(50km)区域上检测到极小的形变(1cm或更小)
+\cite{gabrielMappingSmallElevation1989}，
+验证了InSAR技术在沉降监测方面的可行性。
 
-本文的研究区域即为卡尔斯巴德的卤水井，本文检测该区域的地表形变，
-并对该形变建立合适的物理模型以分析造成形变的物理原因。
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=0.8\textwidth]{carlsbad.png}
-  \caption{新墨西哥州的卤水井}
-  \label{fig:carlsbad}
-  \note{注：图片引自\inlinecite{landElectricalResistivitySurvey2011}，
-  图中JWS Sinkhole和Loco Hills Sinkhole为已经坍塌的卤水井，I\&W Brine Well为未坍塌的卤水井，也是本文的研究区域。}
-\end{figure}
+2001年，Ferretti等人首次提出PS-InSAR技术(permanent scatterer)
+\cite{ferrettiPermanentScatterersSAR2001}
+并将其应用与地面沉降速率的监测
+\cite{ferrettiNonlinearSubsidenceRate2000}。
+2004年，Hooper提出了新的PS-InSAR算法(persistent scatterer)，
+并将这一新的算法应用于植被茂盛的火山区域，获取了地表的形变速率
+\cite{hooperNewMethodMeasuring2004}，
+对比发现，此PS算法的结果和GPS与水准测量的结果吻合，
+大部分的PS点的可靠性较高。
+2008年，Hooper将PS-InSAR和SBAS结合，
+提取了更多的PS点，并进一步提高了信噪比
+\cite{hooperMultitemporalInSARMethod2008}。
+2011年，Ferretti等人将PS点(persistent scatterer)和DS点(distributed scatterer)
+的信号结合，提出了SqueeSAR技术。
 
-\subsection{地质背景}
-研究区域在德州西方，新墨西哥州的东南方的配科斯地区。
-配科斯地区为喀斯特地形，其基岩的主要成分为石膏，是典型的石灰岩地区。
-该地区石膏基岩上分布有岩溶裂隙和坑洞。
-部分坑洞是自然形成的，一般由地下水上涌溶蚀基岩形成，也有部分和盐层的溶浸开采有关。
-此卤水井位于特拉华盆地，该盆地的最上部分由约1700m的红层和蒸发岩组成。
-该部分包含salado地层，大概在地下140-180m之间，含有丰富的岩盐。
-该卤水井的目的就是开采该地层的岩盐。
-
-\subsection{开采背景}
-向地下注入新鲜的淡水，等待岩盐充分溶解之后将饱和溶液泵出并提纯，这是此类卤水井的开采原理。
-该处卤水井一共有两口井，分别称为尤金妮娅1号和尤金妮娅2号。如图\ref{fig:twowell}所示。
-\begin{figure}[htp]
-  \centering
-  \includegraphics[width=0.8\textwidth]{twowell.png}
-  \caption{两口卤水井}
-  \note{注：图中三角形所标地点为尤金妮娅2号，正方形所标地点为尤金妮娅1号。}
-  \label{fig:twowell}
-\end{figure}
-尤金妮娅1号首先被钻成，并作为单井使用。
-然而，由于产量不高的原因，又钻了位于尤金妮娅1号西北方向100米左右的尤金妮娅2号。
-之后两个水井被打通，尤金妮娅2号作为淡水注入井，而溶有岩盐的水从尤金妮娅1号泵出。
-从2000年开始，尤金妮娅2号被关停，尤金妮娅1号再次作为单井使用。
-
-\section{研究意义}
-地面沉降是一种危害严重的自然灾害，具有分布范围广，持续时间长的特点。
-合成孔径雷达干涉技术(InSAR)技术，具有大尺度观测的特点，且不需要任何地面上的人工操作，
-能对同一区域进行重复的卫星观测，而且测得的形变较为精密，能很好地满足地面沉降检测的要求，
-从而对突发灾害作出预报。
-
-我国某些区域尤其是矿产资源比较丰富的地区，同面面临着坍塌的风险。
-本研究所使用的方法，可以对此类灾害起到一定的预警作用。
+自从1991年ERS-1卫星发射，大量的SAR数据被获取，使得InSAR得到了广泛的应用。
+目前InSAR技术的应用主要分为一下几个方面：
+\begin{enumerate}
+  \item 火山的喷发期和休眠期地表的形变可以用来研究火山结构，
+  火山喷发机制，以及做火山灾害的危害性评估\cite{luInSARImagingVolcanic2007}；
+  \item 地震震前，震时，震后的地表形变提供了震源定位，断层几何形状，岩石破裂动力学过程；
+  地壳和上地幔物理性质等研究的必要信息
+  \cite{massonnetDisplacementFieldLanders1993,biggsMultiinterferogramMethodMeasuring2007}；
+  \item 地下水的注入和开采，矿物开采，缓慢移动的滑坡导致的形变能够为此类现象的负面性影响的评估和缓解提供数据支持
+  \cite{zhangMappingGroundSurface2012,zhaoLargeareaLandslideDetection2012}；
+  \item 冰川移动的数据能提高人类对全球变暖以及海平面上升的认识
+  \cite{rignotMassBalancePolar2002}；
+  \item 湿地水平面的变化可以提高对洪水灾害的认识和评估
+  \cite{luRadarsat1ERSInSAR2008}。
+\end{enumerate}
 
 \section{本研究的主要内容}
 
 \subsection{使用SBAS-InSAR技术获取当地地表形变}
 本研究选取该卤水井所在区域(约1km×1km)ALOS 1(Advanced Land Observation Satellite 1)从2007年到2011年的15幅影像，
 通过SBAS-InSAR技术获取当地地表形变以及平均的形变速率。这一步使用的软件为StamPS。
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=0.8\textwidth]{flow.pdf}
-  \caption{本研究的组织结构}
-  \label{fig:flow}
-\end{figure}
+
 
 \subsection{使用mogi模型对该形变建模}
 首先观察SBAS-InSAR得到的形变特征，选取比较合适的mogi模型，对该形变进行理论建模，
@@ -102,3 +87,9 @@
 然后与已有的研究成果相对比，并结合当地地质背景，分析所得模型的可靠程度。
 
 本研究的组织结构如图\ref{fig:flow}所示。
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=\textwidth]{flow.pdf}
+  \caption{本研究的组织结构}
+  \label{fig:flow}
+\end{figure}
