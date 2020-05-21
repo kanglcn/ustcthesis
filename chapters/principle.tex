@@ -1,24 +1,67 @@
 \chapter{InSAR技术原理}
 
-\section{SAR与InSAR原理}
+\section{SAR简介}
 
-\subsection{SAR}
 合成孔径雷达(Synthetic apeture radar，SAR)
 是一种可以产生高分辨率图像的卫星雷达系统，属于一种微波成像雷达。
 SAR由传统的雷达技术发展而来。
-通过水平向和垂直向的压缩成像技术能够实现以较小的雷达天线
+通过距离向(range direction)和方位向(azimuth direction)的压缩成像技术能够实现以较小的雷达天线
 得到较高空间分辨率的影像。
-每幅SAR影像的数据为光波从天线到地面每一个像素点然后反射再被天线接受的相位延迟。
-即
-\begin{equation}
-    \phi=-\frac{4\pi}{\lambda}r
-\end{equation}
+针对不同的数据使用目的，
+一般SAR传感器有三种成像模式，
+区别在于接收天线的几何位置关系以及数据获取方式。
+\begin{enumerate}
+    \item 单轨双天线横向模式。
+    所谓单轨，意思是只做一次观测，但需要有两副天线搭载在飞行器上，同时接受两份数据。
+    横向的意思是两幅天线和飞行轨道垂直。
+    如图\ref{fig:sar1}所示。
+    单轨双天线的好处在于两副天线之间的距离可以精确确定，
+    常用于地形的测量。
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{sar1.png}
+        \caption{单轨双天线横向模式，图片引自
+        \inlinecite{niuSARInSARJiZhuYongYuKuangQuTanCeYuXingBianJianCeYanJiu2015}。}
+        \label{fig:sar1}
+    \end{figure}
+    \item 单轨双天线纵向模式。
+    单轨双天线纵向模式和轨双天线横向模式的区别仅仅在于
+    两副天线和飞行器飞行轨道平行。如图\ref{fig:sar2}所示。
+    这种测量模式一般在机载的SAR传感器上实现。
+    用于监测地面物体的运动。
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[width=0.8\textwidth]{sar2.png}
+        \caption{单轨双天线纵向模式，图片引自
+        \inlinecite{niuSARInSARJiZhuYongYuKuangQuTanCeYuXingBianJianCeYanJiu2015}。}
+        \label{fig:sar2}
+    \end{figure}
+    \item 单天线重复轨道模式。
+    这种工作模式的SAR传感器一般只搭载在卫星上。
+    飞行器上只搭载一副天线，多次对同一地点观测，
+    所以需要较为精确的飞行器轨道信息。如图\ref{fig:sar3}所示。
+    目前星载SAR干涉成像主要采用这种工作模式。
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[width=0.8\textwidth]{sar3.png}
+        \caption{单天线重复轨道模式，图片引自
+        \inlinecite{niuSARInSARJiZhuYongYuKuangQuTanCeYuXingBianJianCeYanJiu2015}。}
+        \label{fig:sar3}
+    \end{figure}
+\end{enumerate}
 目前常用的SAR卫星见表\ref{tab:sarsatellite}。
 \begin{table}
     \centering\small
     \begin{tabular}{@{}cccc@{}}
     \toprule
     卫星                                 & 发射时间      & 波段 & 国家  \\ \midrule
+    SEASAT & 1978 & L & 美国 \\
+    ERS-1 &1991 & C &欧盟 \\
+    JERS-1 & 1992 & L & 日本 \\
+    ERS-2 & 1995 & C & 欧盟 \\
+    RADARSAT-1 & 1995 & C & 加拿大 \\
+    ENVISAT & 2002 & C & 欧洲 \\
+    ALOS-1 & 2006 & L & 日本 \\
     TerreaSAR-X/TanDEM-X               & 2007      & X  & 德国  \\
     RADARSAT-2                         & 2007      & C  & 加拿大 \\
     COSMO-SkyMed 1-4                   & 2007-2010 & X  & 意大利 \\
@@ -35,13 +78,19 @@ SAR由传统的雷达技术发展而来。
     \label{tab:sarsatellite}
 \end{table}
 
-\subsection{InSAR}
+\section{InSAR简介}
+每幅SAR影像的数据不仅包含地面散射光波的强度信息，也包含了与传播距离的相位信息。
+即
+\begin{equation}
+    \phi=-\frac{4\pi}{\lambda}r
+\end{equation}
 如果对于同一块区域有两幅影像，就可以对两幅影像做干涉处理。
 原理如图\ref{fig:geometry}所示。
-\begin{figure}[htb!]
+\begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\textwidth]{geometry.png}
-    \caption{InSAR技术原理示意图}
+    \caption{InSAR技术原理示意图，图片引自
+    \inlinecite{niuSARInSARJiZhuYongYuKuangQuTanCeYuXingBianJianCeYanJiu2015}。}
     \label{fig:geometry}
 \end{figure}
 所谓干涉，就是指二者相位相减。即
@@ -55,7 +104,6 @@ SAR由传统的雷达技术发展而来。
 \begin{equation}
     \Delta \phi=\frac{4\pi}{\lambda}\left(\sqrt{r_1^2−2(B_hsinθ_1−B_{\perp}sinθ_1)r_1+B^2}−r_1\right)
 \end{equation}
-
 如果已知数字高程模型的话，可以算出来在理想条件下，无形变时的相位差。
 将实际算得的相位差和无形变时理论计算的相位差相减，剩余的相位差即为因形变引起的相位差。
 \begin{equation}
@@ -65,7 +113,7 @@ SAR由传统的雷达技术发展而来。
 从而可以把地表在卫星视线方向的形变算出来。
 这种技术称之为D-InSAR。
 
-注意，实际的到的相位是“缠绕”的相位，即相位是处于$(-\pi,\pi]$之间的。
+注意，实际得到的相位是“缠绕”的相位，即相位是处于$(-\pi,\pi]$之间的。
 将缠绕的相位通过解缠操作之后才得到上文中使用的相位。
 解缠的方法很多，基本的假设是相邻像素的相位差不超过$\pi$。
 
@@ -95,7 +143,7 @@ PS-InSAR技术的主要内容为PS点的选取，分为两个步骤：
     \begin{equation}
         \sigma_\varphi \approx \frac{\sigma_a}{\mu_a}
     \end{equation}
-    其中，$\sigma_\varphi$是相位标准差，$\sigma_a$是模长的标准差，$\mu_a$是模长的均值。
+    其中，$\sigma_\varphi$是相位标准差，$\sigma_a$是反射波振幅的标准差，$\mu_a$是振幅的均值。
     通过设置$\frac{\sigma_a}{\mu_a}$的上界$D_A$，筛选出一批PS点。
     \item 再次筛选。
     这一步通过分析相位的稳定性来做筛选。
@@ -119,7 +167,7 @@ PS点的差分干涉相位中主要的误差来源于高程误差，大气影响
     \end{equation}
     \item $\varphi_{def}$为地表形变导致的差分干涉相位的变化，一般来说是研究所需要的结果，其余的各项均为误差；
     \item $\varphi_{orb}$是卫星轨道定轨不精确，轨道参数不准确引入的误差；
-    \item $\varphi_{atm}$为大气的延迟效应导致的误差，由于光波在大气这种介质中的传播速度相对于真空中的光速有一定的偏差而引入这一误差；
+    \item $\varphi_{atm}$为大气的延迟效应导致的误差；
     \item $\varphi_{noise}$为其他的一些噪声效应引入的误差，如热噪声等。
 \end{itemize}
 
@@ -148,15 +196,10 @@ StamPS是基于Matlab的一套软件，软件处理数据一共分为8步：
     \item 读取数据，并保存在matlab工作区；
     \item 估计相位噪声，这一步通过循环估计每一幅干涉图的每一个像素点的相位噪声；
     \item 通过分析各像素点的噪声情况筛选出PS点，这一步还估计出非PS点的像素的密度；
-    \item 上一布只是粗略地选择PS点，其中还有较多的不稳定的像素点，这一步清除这些点；
+    \item 上一步只是粗略地选择PS点，其中还有较多的不稳定的像素点，这一步清除这些点；
     \item 去除所选择的像素点相位中空间不相关的视角误差；
     \item 相位解缠；
     \item 估计空间相关的视角误差，该误差绝大多数来源于空间相关的DEM误差，
     包括DEM本身的误差以及从地面坐标到雷达坐标投影的误差；
     \item 去除大气效应误差。
 \end{enumerate}
-
-\section{本研究所用的方法}
-D-InSAR在监测地面沉降方面取得了一定的成果，但由于这种方法受失相干的影响比较严重，
-并不适合本研究使用。
-且由于数据较少的缘故，本研究采用StamPS中数据利用率更高的SBAS-InSAR\cite{hooperMultitemporalInSARMethod2008}方法处理数据。
