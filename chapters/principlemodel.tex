@@ -43,7 +43,7 @@
     P(\mathbf{m}|\mathbf{d})=\frac{P(\mathbf{d}|\mathbf{m})P(\mathbf{m})}{P(\mathbf{d})}
 \end{equation}
 其中$P(\mathbf{m})$为先验概率，其分布由其他方法获得。
-$P(d)$为归一化因子。
+$P(\mathbf{d})$为归一化因子。
 假设$\vepsilon$服从均值为$0$，方差为$\Sigma_{\mathbf{d}}$的高斯分布，则
 \begin{equation}
     \label{eq:pm:likelihood}
@@ -54,7 +54,8 @@ $P(d)$为归一化因子。
 这种方法旨在求得最优的模型参数$\mathbf{m}$的后验概率分布$p(\mathbf{m}|\mathbf{d})$。
 下面简述算法。
 \begin{enumerate}
-    \item 为了节省时间，对数据$\mathbf{d}$进行采样，并估计数据的方差$\Sigma_{\mathbf{d}}$。
+    \item 为了节省时间，对数据$\mathbf{d}$进行采样，并估计数据的方差$\Sigma_{\mathbf{d}}$，
+    具体的做法是人为选择一块没有认为没有形变的区域，通过这块区域形变数据的方差估计$\Sigma_{\mathbf{d}}$。
     \item 给定参数$\mathbf{m}$的可能区间和先验概率和循环的起始点$\mathbf{m_0}$。
     \item 由起始点$\mathbf{m_0}$计算理论形变$\mathbf{d}_0$。
     \item 由公式\ref{eq:pm:bayes}和公式\ref{eq:pm:likelihood}算得当前后验概率$p(\mathbf{m}|\mathbf{d}_i)$。
